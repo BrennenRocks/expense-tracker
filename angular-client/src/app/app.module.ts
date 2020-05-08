@@ -10,6 +10,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppStoreModule } from './store/app-store.module';
+import { HttpClientModule } from '@angular/common/http';
+import { TransactionsModule } from './transactions/transactions.module';
 
 export const metaReducers: MetaReducer<any>[] = environment.production ? [] : [];
 
@@ -18,13 +20,15 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
     AppComponent
   ],
   imports: [
-    AppStoreModule,
     BrowserModule,
     CoreModule,
-    EntityDataModule.forRoot(entityConfig),
+    HttpClientModule,
+    AppStoreModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    // EntityDataModule.forRoot(entityConfig),
+    // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    TransactionsModule,
     environment.production ? [] : StoreDevtoolsModule.instrument()
   ],
   providers: [],

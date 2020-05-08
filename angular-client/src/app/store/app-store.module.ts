@@ -18,9 +18,9 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
 @NgModule({
   declarations: [],
   imports: [
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
-    StoreModule.forRoot({}),
     environment.production ? [] : StoreDevtoolsModule.instrument()
   ],
   providers: [ { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig } ]

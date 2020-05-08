@@ -1,0 +1,3 @@
+<ng-container *ngIf="transactions$ | async as transactions">
+  <bd-balance [transactions]="transactions"></bd-balance>
+</ng-container>

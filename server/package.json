@@ -6,8 +6,10 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
-    "client": "npm start --prefix ../react-client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "react:client": "npm start --prefix ../react-client",
+    "react:dev": "concurrently \"npm run server\" \"npm run react:client\"",
+    "angular:client": "npm start --prefix ../angular-client",
+    "angular:dev": "concurrently \"npm run server\" \"npm run angular:client\""
   },
   "author": "Brennen Davis",
   "license": "MIT",
