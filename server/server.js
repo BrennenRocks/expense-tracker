@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/transactions', transactions);
 
-if (process.env.NODE_ENV = 'production') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../react-client/build'));
 
   app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'react-client', 'build', 'index.html')));

@@ -8,12 +8,9 @@ import { TransactionsService } from './transactions.service';
   templateUrl: './transactions.component.html'
 })
 export class TransactionsComponent implements OnInit {
-  transactions$: Observable<any>;
-  loading$: Observable<boolean>;
+  transactions$: Observable<Transaction[]>;
 
   constructor(private transactionsService: TransactionsService) {
-    this.transactions$ = transactionsService.entities$;
-    this.loading$ = this.transactionsService.loading$;
   }
 
   ngOnInit(): void {
@@ -21,6 +18,6 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactions(): void {
-    this.transactionsService.getAll();
+    this.transactions$ = this.transactionsService.getAll();
   }
 }

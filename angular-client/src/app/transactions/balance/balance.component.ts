@@ -14,8 +14,8 @@ export class BalanceComponent implements OnInit {
   
   set transactions(value: Transaction[]) {
     if (value) {
-        this._transactions = value;
-        this.balance = this.calculateBalance();
+      this._transactions = value;
+      this.balance = this.calculateBalance();
     }
   }
 

@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { EntityDataModule } from '@ngrx/data';
-import { entityConfig } from './store/entity-metadata';
 import { CoreModule } from './core/core.module';
 import { StoreModule, MetaReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,8 +24,6 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
     AppStoreModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
-    // EntityDataModule.forRoot(entityConfig),
-    // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     TransactionsModule,
     environment.production ? [] : StoreDevtoolsModule.instrument()
   ],
