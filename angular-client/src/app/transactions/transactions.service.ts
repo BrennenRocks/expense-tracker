@@ -27,7 +27,7 @@ export class TransactionsService extends EntityCollectionServiceBase<Transaction
         map((res: ServerResponse) => {
           this.addAllToCache(res.data);
           return res;
-        }),
+        })
       ).subscribe((res: ServerResponse) => {
         if (!res.success) {
           this.notificationService.showError(res.error.message);
@@ -35,6 +35,23 @@ export class TransactionsService extends EntityCollectionServiceBase<Transaction
         }
 
         this.notificationService.showSuccess('GET Transactions');
+      });
+  }
+
+  deleteTransaction(id: string): void {
+    this.http.delete<ServerResponse>(this.transactionsUrl + `/${id}`)
+      .pipe(
+        map((res: ServerResponse) => {
+          this.removeOneFromCache(res.data[0]);
+          return res;
+        })
+      ).subscribe((res: ServerResponse) => {
+        if (!res.success) {
+          this.notificationService.showError(res.error.message);
+          return;
+        }
+
+        this.notificationService.showSuccess(`${res.data[0].text} successfully deleted`);
       });
   }
 }

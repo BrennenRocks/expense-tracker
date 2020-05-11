@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { AppStoreModule } from './store/app-store.module';
 import { HttpClientModule } from '@angular/common/http';
 import { TransactionsModule } from './transactions/transactions.module';
+import { AbsoluteValuePipe } from './core/absolute-value.pipe';
 
 export const metaReducers: MetaReducer<any>[] = environment.production ? [] : [];
 
@@ -27,7 +28,7 @@ export const metaReducers: MetaReducer<any>[] = environment.production ? [] : []
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     TransactionsModule,
-    environment.production ? [] : StoreDevtoolsModule.instrument()
+    environment.production ? [] : StoreDevtoolsModule.instrument(),
   ],
   providers: [],
   bootstrap: [AppComponent]

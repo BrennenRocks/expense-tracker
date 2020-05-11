@@ -1,0 +1,4 @@
+<h3>History</h3>
+<ul class="list">
+  <bd-transaction *ngFor="let transaction of transactions$ | async" [transaction]="transaction"></bd-transaction>
+</ul>

@@ -1,5 +1,12 @@
-<div *ngIf="!(loading$ | async) && transactions$ | async as transactions; else loading">
+<!-- If you want to pass down the transactions to each child -->
+<!-- <div *ngIf="!(loading$ | async) && transactions$ | async as transactions; else loading">
   <bd-balance [transactions]="transactions"></bd-balance>
+</div> -->
+
+<div *ngIf="!(loading$ | async); else loading">
+  <bd-balance></bd-balance>
+  <bd-income-expenses></bd-income-expenses>
+  <bd-transaction-list></bd-transaction-list>
 </div>
 
 <ng-template #loading>
