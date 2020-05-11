@@ -1,25 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpUrlGenerator, DefaultDataService } from '@ngrx/data';
+import { HttpUrlGenerator, DefaultDataService, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { Transaction } from '../core/models/transaction';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { map, tap } from 'rxjs/operators';
+import { map, tap, publish } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { ServerResponse } from '../core/models/server_response';
+import { NotificationService } from '../core/notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionsService extends DefaultDataService<Transaction> {
+export class TransactionsService extends EntityCollectionServiceBase<Transaction> {
 
-  constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
-    super('Transaction', http, httpUrlGenerator);
+  private transactionsUrl: string = environment.apiUrlBase + '/transactions';
+
+  constructor(private http: HttpClient, entityCollectionServiceElementsFactory: EntityCollectionServiceElementsFactory, private notificationService: NotificationService) {
+    super('Transaction', entityCollectionServiceElementsFactory);
    }
 
-   getAll(): Observable<Transaction[]> {
-     return super.getAll()
+  getAllTransactions(): void {
+    this.setLoading(true);
+    this.http.get<ServerResponse>(this.transactionsUrl)
       .pipe(
-        // tap(res => console.log(res)), // store other values from the request into the store
-        map((res: any) => res.data)
-      );
-   }
+        map((res: ServerResponse) => {
+          this.addAllToCache(res.data);
+          return res;
+        }),
+      ).subscribe((res: ServerResponse) => {
+        if (!res.success) {
+          this.notificationService.showError(res.error.message);
+          return;
+        }
+
+        this.notificationService.showSuccess('GET Transactions');
+      });
+  }
 }
