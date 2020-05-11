@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Transaction } from 'src/app/core/models/transaction';
 import { TransactionsService } from '../../transactions.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'bd-transaction',

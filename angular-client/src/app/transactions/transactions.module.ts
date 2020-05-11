@@ -5,15 +5,16 @@ import { TransactionsComponent } from './transactions.component';
 import { IncomeExpensesComponent } from './income-expenses/income-expenses.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { TransactionComponent } from './transaction-list/transaction/transaction.component';
-import { AbsoluteValuePipe } from '../core/absolute-value.pipe';
+import { FormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
+import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 
 
 
 @NgModule({
-  declarations: [BalanceComponent, TransactionsComponent, IncomeExpensesComponent, TransactionListComponent, TransactionComponent],
+  declarations: [BalanceComponent, TransactionsComponent, IncomeExpensesComponent, TransactionListComponent, TransactionComponent, AddTransactionComponent],
   imports: [
-    CommonModule, CoreModule
+    CommonModule, CoreModule, FormsModule
   ],
   exports: [
     TransactionsComponent

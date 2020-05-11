@@ -3,12 +3,9 @@
   <bd-balance [transactions]="transactions"></bd-balance>
 </div> -->
 
-<div *ngIf="!(loading$ | async); else loading">
+<div>
   <bd-balance></bd-balance>
   <bd-income-expenses></bd-income-expenses>
   <bd-transaction-list></bd-transaction-list>
+  <bd-add-transaction></bd-add-transaction>
 </div>
-
-<ng-template #loading>
-  Loading...
-</ng-template>

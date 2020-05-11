@@ -34,7 +34,7 @@ exports.addTransaction = async (req, res, next) => {
 
     return res.status(201).json({
       success: true,
-      data: transaction
+      data: [transaction]
     });
   } catch (err) {
     if (err.name === 'ValidationError') {
