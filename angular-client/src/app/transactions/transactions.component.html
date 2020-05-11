@@ -1,7 +1,7 @@
-<div *ngIf="loading$ | async">
-  Loading...
-</div>
-
-<div *ngIf="!(loading$ | async) && transactions$ | async as transactions">
+<div *ngIf="!(loading$ | async) && transactions$ | async as transactions; else loading">
   <bd-balance [transactions]="transactions"></bd-balance>
 </div>
+
+<ng-template #loading>
+  Loading...
+</ng-template>
