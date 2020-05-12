@@ -6,16 +6,18 @@ import 'package:stacked/stacked.dart';
 class TransactionList extends ViewModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel model) {
-    return ListView(
-      children: ListTile.divideTiles(
-        context: context,
-        tiles: model.data
-            .map(
-              (Transaction transaction) =>
-                  _TransactionTile(transaction: transaction),
-            )
-            .toList(),
-      ).toList(),
+    return Flexible(
+      child: ListView(
+        children: ListTile.divideTiles(
+          context: context,
+          tiles: model.data
+              .map(
+                (Transaction transaction) =>
+                    _TransactionTile(transaction: transaction),
+              )
+              .toList(),
+        ).toList(),
+      ),
     );
   }
 }

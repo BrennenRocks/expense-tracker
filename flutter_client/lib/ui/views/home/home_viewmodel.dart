@@ -90,10 +90,25 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
         .toList();
   }
 
+  List<double> _getAmountsList() {
+    return data.map((Transaction transaction) => transaction.amount).toList();
+  }
+
   double getAmount() {
-    List<double> amounts =
-        data.map((Transaction transaction) => transaction.amount).toList();
-    return amounts.reduce((acc, item) => (acc += item));
+    return _getAmountsList().reduce((acc, item) => (acc += item));
+  }
+
+  double getIncome() {
+    return _getAmountsList()
+        .where((double amount) => amount > 0)
+        .reduce((acc, item) => (acc += item));
+  }
+
+  double getExpense() {
+    return _getAmountsList()
+        .where((double amount) => amount < 0)
+        .reduce((acc, item) => (acc += item))
+        .abs();
   }
 
   void navigateToAddTransaction() async {

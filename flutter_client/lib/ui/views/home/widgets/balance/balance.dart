@@ -7,10 +7,12 @@ class Balance extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel model) {
     double amount = model.getAmount();
 
-    return Container(
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0, left: 12.0),
       child: RichText(
         text: TextSpan(
           text: 'YOUR BALANCE',
+          style: TextStyle(fontSize: 16),
           children: <TextSpan>[
             TextSpan(text: '\n'),
             TextSpan(
