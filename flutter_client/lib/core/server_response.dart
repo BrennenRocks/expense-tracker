@@ -2,7 +2,7 @@ class ServerResponse {
   final bool success;
   final int count;
   final List<dynamic> data;
-  final Map<String, Map<String, String>> error;
+  final Map<String, String> error;
 
   ServerResponse(this.success, {this.count, this.data, this.error});
 

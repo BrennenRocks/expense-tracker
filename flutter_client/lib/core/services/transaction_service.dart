@@ -13,4 +13,9 @@ class TransactionService {
     final res = await http.get(rootUrl + '/transactions');
     return ServerResponse.fromJson(json.decode(res.body));
   }
+
+  Future<ServerResponse> deleteTransaction(String id) async {
+    final res = await http.delete(rootUrl + '/transactions/$id');
+    return ServerResponse.fromJson(json.decode(res.body));
+  }
 }
