@@ -42,6 +42,13 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
       return [];
     }
 
+    _snackbarService.showCustomSnackBar(
+      backgroundColor: Colors.green,
+      title: 'Success',
+      message: 'GET Transactions',
+      duration: Duration(seconds: 3),
+    );
+
     return res.data
         .map((transaction) => Transaction.fromJson(transaction))
         .toList();
@@ -71,10 +78,22 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
       return [];
     }
 
+    _snackbarService.showCustomSnackBar(
+      backgroundColor: Colors.green,
+      title: 'Success',
+      message: Transaction.fromJson(res.data[0]).text,
+      duration: Duration(seconds: 3),
+    );
+
     return res.data
         .map((transaction) => Transaction.fromJson(transaction))
         .toList();
-    ;
+  }
+
+  double getAmount() {
+    List<double> amounts =
+        data.map((Transaction transaction) => transaction.amount).toList();
+    return amounts.reduce((acc, item) => (acc += item));
   }
 
   void navigateToAddTransaction() async {
