@@ -100,15 +100,15 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
 
   double getIncome() {
     return _getAmountsList()
-        .where((double amount) => amount > 0)
-        .reduce((acc, item) => (acc += item));
+      .where((double amount) => amount > 0)
+      .fold(0.00, (acc, item) => (acc += item));
   }
 
   double getExpense() {
     return _getAmountsList()
-        .where((double amount) => amount < 0)
-        .reduce((acc, item) => (acc += item))
-        .abs();
+      .where((double amount) => amount < 0)
+      .fold(0.00, (acc, item) => (acc += item))
+      .abs();
   }
 
   void navigateToAddTransaction() async {
