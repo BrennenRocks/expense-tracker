@@ -10,7 +10,7 @@ class TransactionList extends ViewModelWidget<HomeViewModel> {
       child: ListView(
         children: ListTile.divideTiles(
           context: context,
-          tiles: model.data
+          tiles: model.transactionList
               .map(
                 (Transaction transaction) =>
                     _TransactionTile(transaction: transaction),

@@ -10,7 +10,6 @@ class IncomeExpense extends ViewModelWidget<HomeViewModel> {
         height: 100.0,
         width: MediaQuery.of(context).size.width / 1.5,
         child: Card(
-          elevation: 10,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

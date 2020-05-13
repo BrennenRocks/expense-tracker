@@ -11,6 +11,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
+      onModelReady: (model) => model.getAllTransactions(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text(model.title),

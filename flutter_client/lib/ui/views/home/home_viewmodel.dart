@@ -7,7 +7,7 @@ import 'package:flutter_client/core/services/transaction_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class HomeViewModel extends FutureViewModel<List<Transaction>> {
+class HomeViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
   final SnackbarService _snackbarService = locator<SnackbarService>();
@@ -16,20 +16,12 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
   String _title = 'Expense Tracker';
   String get title => _title;
 
-  @override
-  Future<List<Transaction>> futureToRun() => getAllTransactions();
+  List<Transaction> get transactionList => _transactionService.transactionList;
 
-  @override
-  void onError(error) {
-    _snackbarService.showCustomSnackBar(
-      backgroundColor: Colors.red,
-      title: 'Error',
-      message: error,
-      duration: Duration(seconds: 3),
-    );
-  }
+  void getAllTransactions() async {
+    setBusy(true);
+    notifyListeners();
 
-  Future<List<Transaction>> getAllTransactions() async {
     ServerResponse res = await _transactionService.getAllTransactions();
     if (!res.success) {
       _snackbarService.showCustomSnackBar(
@@ -39,7 +31,9 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
         duration: Duration(seconds: 3),
       );
 
-      return [];
+      setBusy(false);
+      notifyListeners();
+      return;
     }
 
     _snackbarService.showCustomSnackBar(
@@ -49,9 +43,12 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
       duration: Duration(seconds: 3),
     );
 
-    return res.data
+    _transactionService.transactionList = res.data
         .map((transaction) => Transaction.fromJson(transaction))
         .toList();
+
+    setBusy(false);
+    notifyListeners();
   }
 
   Future<bool> confirmDeleteTransaction() async {
@@ -65,7 +62,7 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
     return res.confirmed;
   }
 
-  Future<List<Transaction>> deleteTransaction(String id) async {
+  void deleteTransaction(String id) async {
     ServerResponse res = await _transactionService.deleteTransaction(id);
     if (!res.success) {
       _snackbarService.showCustomSnackBar(
@@ -75,37 +72,38 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
         duration: Duration(seconds: 3),
       );
 
-      return [];
+      return;
     }
+
+    Transaction transaction = Transaction.fromJson(res.data[0]);
 
     _snackbarService.showCustomSnackBar(
       backgroundColor: Colors.green,
       title: 'Success',
-      message: '${Transaction.fromJson(res.data[0]).text} successfully deleted',
+      message: '${transaction.text} successfully deleted',
       duration: Duration(seconds: 3),
     );
 
-    return res.data
-        .map((transaction) => Transaction.fromJson(transaction))
-        .toList();
-  }
-
-  List<double> _getAmountsList() {
-    return data.map((Transaction transaction) => transaction.amount).toList();
+    _transactionService.transactionList.remove(transaction);
+    notifyListeners();
   }
 
   double getAmount() {
-    return _getAmountsList().reduce((acc, item) => (acc += item));
+    return _transactionService
+        .getAmountsList()
+        .reduce((acc, item) => (acc += item));
   }
 
   double getIncome() {
-    return _getAmountsList()
+    return _transactionService
+        .getAmountsList()
         .where((double amount) => amount > 0)
         .fold(0.00, (acc, item) => (acc += item));
   }
 
   double getExpense() {
-    return _getAmountsList()
+    return _transactionService
+        .getAmountsList()
         .where((double amount) => amount < 0)
         .fold(0.00, (acc, item) => (acc += item))
         .abs();
@@ -115,11 +113,16 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
     var res =
         await _navigationService.navigateTo(Routes.addTransactionViewRoute);
 
+    Transaction transaction = res['transaction'][0];
+
     _snackbarService.showCustomSnackBar(
       backgroundColor: Colors.green,
       title: 'Success',
-      message: '${res['transaction'][0].text} successfully added',
+      message: '${transaction.text} successfully added',
       duration: Duration(seconds: 3),
     );
+
+    _transactionService.transactionList.add(transaction);
+    notifyListeners();
   }
 }

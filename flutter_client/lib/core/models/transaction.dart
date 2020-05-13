@@ -12,4 +12,12 @@ class Transaction {
       amount: json['amount'].toDouble(),
     );
   }
+
+  @override
+  bool operator ==(other) {
+    return this.id == other.id;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }
