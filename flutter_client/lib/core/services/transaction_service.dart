@@ -18,4 +18,18 @@ class TransactionService {
     final res = await http.delete(rootUrl + '/transactions/$id');
     return ServerResponse.fromJson(json.decode(res.body));
   }
+
+  Future<ServerResponse> addTransaction(String text, double amount) async {
+    String jsonBody =
+        jsonEncode(<String, dynamic>{'text': text, 'amount': amount});
+
+    final res = await http.post(
+      rootUrl + '/transactions',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: jsonBody,
+    );
+    return ServerResponse.fromJson(json.decode(res.body));
+  }
 }

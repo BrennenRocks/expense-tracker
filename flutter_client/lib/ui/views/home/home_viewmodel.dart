@@ -81,7 +81,7 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
     _snackbarService.showCustomSnackBar(
       backgroundColor: Colors.green,
       title: 'Success',
-      message: Transaction.fromJson(res.data[0]).text,
+      message: '${Transaction.fromJson(res.data[0]).text} successfully deleted',
       duration: Duration(seconds: 3),
     );
 
@@ -100,18 +100,26 @@ class HomeViewModel extends FutureViewModel<List<Transaction>> {
 
   double getIncome() {
     return _getAmountsList()
-      .where((double amount) => amount > 0)
-      .fold(0.00, (acc, item) => (acc += item));
+        .where((double amount) => amount > 0)
+        .fold(0.00, (acc, item) => (acc += item));
   }
 
   double getExpense() {
     return _getAmountsList()
-      .where((double amount) => amount < 0)
-      .fold(0.00, (acc, item) => (acc += item))
-      .abs();
+        .where((double amount) => amount < 0)
+        .fold(0.00, (acc, item) => (acc += item))
+        .abs();
   }
 
   void navigateToAddTransaction() async {
-    await _navigationService.navigateTo(Routes.addTransactionViewRoute);
+    var res =
+        await _navigationService.navigateTo(Routes.addTransactionViewRoute);
+
+    _snackbarService.showCustomSnackBar(
+      backgroundColor: Colors.green,
+      title: 'Success',
+      message: '${res['transaction'][0].text} successfully added',
+      duration: Duration(seconds: 3),
+    );
   }
 }

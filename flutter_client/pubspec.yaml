@@ -40,6 +40,10 @@ dependencies:
   get_it:
   injectable:
 
+  #hooks
+  flutter_hooks:
+  stacked_hooks: ^0.1.1+3
+
   # http
   http:
 
