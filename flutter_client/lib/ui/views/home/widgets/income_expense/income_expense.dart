@@ -7,9 +7,10 @@ class IncomeExpense extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel model) {
     return Center(
       child: Container(
-        height: 150.0,
+        height: 100.0,
         width: MediaQuery.of(context).size.width / 1.5,
         child: Card(
+          elevation: 10,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -25,7 +26,14 @@ class IncomeExpense extends ViewModelWidget<HomeViewModel> {
                   ],
                 ),
               ),
-              SizedBox(width: 70.0),
+              SizedBox(width: 35.0),
+              VerticalDivider(
+                indent: 20,
+                endIndent: 20,
+                width: 2.0,
+                thickness: 2.0,
+              ),
+              SizedBox(width: 35.0),
               RichText(
                 text: TextSpan(
                   text: 'EXPENSE',
