@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_client/ui/views/home/home_viewmodel.dart';
 import 'package:flutter_client/ui/views/home/widgets/balance/balance.dart';
+import 'package:flutter_client/ui/views/home/widgets/history_title/history_title.dart';
 import 'package:flutter_client/ui/views/home/widgets/income_expense/income_expense.dart';
 import 'package:flutter_client/ui/views/home/widgets/transaction_list/transaction_list.dart';
 import 'package:stacked/stacked.dart';
@@ -23,6 +24,7 @@ class HomeView extends StatelessWidget {
                     SizedBox(height: 15.0),
                     IncomeExpense(),
                     SizedBox(height: 15.0),
+                    HistoryTitle(),
                     TransactionList(),
                     RaisedButton(
                       child: Text('Add Transaction'),
