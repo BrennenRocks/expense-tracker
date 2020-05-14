@@ -58,7 +58,7 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({
         type: ActionConst.TRANSACTION_ADD,
-        payload: res.data.data
+        payload: res.data.data[0]
       });
     } catch (err) {
       dispatch({
