@@ -12,7 +12,14 @@ class AddTransactionViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   String _text;
+  set text(String text) {
+    _text = text;
+  }
+
   double _amount;
+  set amount(String amount) {
+    _amount = double.parse(amount);
+  }
 
   void updateText(String text) {
     _text = text;
@@ -29,13 +36,7 @@ class AddTransactionViewModel extends BaseViewModel {
         await _transactionService.addTransaction(_text, _amount);
 
     if (!res.success) {
-      _snackbarService.showCustomSnackBar(
-        backgroundColor: Colors.red,
-        title: 'Error',
-        message: res.error['message'],
-        duration: Duration(seconds: 3),
-      );
-
+      _showErrorSnackbar(res);
       return;
     }
 
@@ -44,5 +45,31 @@ class AddTransactionViewModel extends BaseViewModel {
         .toList();
 
     _navigationService.back(result: {'transaction': transactionList});
+  }
+
+  void updateTransaction(String id) async {
+    print('$id $_text $_amount');
+    final ServerResponse res =
+        await _transactionService.updateTransaction(id, _text, _amount);
+
+    if (!res.success) {
+      _showErrorSnackbar(res);
+      return;
+    }
+
+    List<Transaction> transactionList = res.data
+        .map((transaction) => Transaction.fromJson(transaction))
+        .toList();
+
+    _navigationService.back(result: {'transaction': transactionList});
+  }
+
+  void _showErrorSnackbar(ServerResponse res) {
+    _snackbarService.showCustomSnackBar(
+      backgroundColor: Colors.red,
+      title: 'Error',
+      message: res.error['message'],
+      duration: Duration(seconds: 3),
+    );
   }
 }

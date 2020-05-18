@@ -11,7 +11,7 @@ class AddTransactionButton extends ViewModelWidget<HomeViewModel> {
           minWidth: MediaQuery.of(context).size.width / 1.5,
           child: RaisedButton(
             child: Text('Add Transaction'),
-            onPressed: () => model.navigateToAddTransaction(),
+            onPressed: () => model.navigateToAddTransaction(null),
           ),
         ),
       ),

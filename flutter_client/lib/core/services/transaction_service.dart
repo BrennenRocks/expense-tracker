@@ -12,25 +12,44 @@ class TransactionService {
 
   List<Transaction> transactionList = [];
 
+  String _getTransactionJson(String text, double amount) {
+    String jsonBody =
+        jsonEncode(<String, dynamic>{'text': text, 'amount': amount});
+    return jsonBody;
+  }
+
+  Map<String, String> _getHeaders() {
+    return <String, String>{'Content-Type': 'application/json; charset=UTF-8'};
+  }
+
   Future<ServerResponse> getAllTransactions() async {
-    final res = await http.get(rootUrl + '/transactions');
+    final res = await http.get('$rootUrl/transactions');
     return ServerResponse.fromJson(json.decode(res.body));
   }
 
   Future<ServerResponse> deleteTransaction(String id) async {
-    final res = await http.delete(rootUrl + '/transactions/$id');
+    final res = await http.delete('$rootUrl/transactions/$id');
     return ServerResponse.fromJson(json.decode(res.body));
   }
 
   Future<ServerResponse> addTransaction(String text, double amount) async {
-    String jsonBody =
-        jsonEncode(<String, dynamic>{'text': text, 'amount': amount});
+    String jsonBody = _getTransactionJson(text, amount);
 
     final res = await http.post(
-      rootUrl + '/transactions',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8'
-      },
+      '$rootUrl/transactions',
+      headers: _getHeaders(),
+      body: jsonBody,
+    );
+    return ServerResponse.fromJson(json.decode(res.body));
+  }
+
+  Future<ServerResponse> updateTransaction(
+      String id, String text, double amount) async {
+    String jsonBody = _getTransactionJson(text, amount);
+
+    final res = await http.put(
+      '$rootUrl/transactions/$id',
+      headers: _getHeaders(),
       body: jsonBody,
     );
     return ServerResponse.fromJson(json.decode(res.body));

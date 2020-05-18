@@ -58,6 +58,39 @@ exports.addTransaction = async (req, res, next) => {
 };
 
 /**
+ * @description Update transaction
+ * @route PUT /api/v1/transactions/:id
+ * @access Public
+ */
+exports.updateTransaction = async (req, res, next) => {
+  try {
+    const transaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, { new: true, useFindAndModify: false });
+
+    return res.status(200).json({
+      success: true,
+      data: [transaction]
+    });
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(el => el.message);
+
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: messages
+        }
+      });
+    }
+    return res.status(500).json({
+      success: false,
+      error: {
+        message: 'Server Error'
+      }
+    });
+  }
+};
+
+/**
  * @description Delete transaction
  * @route       DELETE /api/v1/transactions/:id
  * @access      Public

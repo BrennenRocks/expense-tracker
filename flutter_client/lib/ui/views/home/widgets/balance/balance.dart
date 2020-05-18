@@ -17,7 +17,7 @@ class Balance extends ViewModelWidget<HomeViewModel> {
             TextSpan(text: '\n'),
             TextSpan(
               text:
-                  '${amount > 0 ? '' : '- '}\$${amount.abs().toStringAsFixed(2)}',
+                  '${amount >= 0 ? '' : '- '}\$${amount.abs().toStringAsFixed(2)}',
               style: TextStyle(fontSize: 40),
             ),
           ],

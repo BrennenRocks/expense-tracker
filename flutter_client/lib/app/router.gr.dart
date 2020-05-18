@@ -37,7 +37,8 @@ class Router extends RouterBase {
         );
       case Routes.addTransactionViewRoute:
         return MaterialPageRoute<dynamic>(
-          builder: (context) => AddTransactionView(),
+          builder: (context) =>
+              AddTransactionView(transaction: settings.arguments),
           settings: settings,
         );
       default:

@@ -48,17 +48,6 @@ class HomeViewModel extends BaseViewModel {
     setBusy(false);
   }
 
-  Future<bool> confirmDeleteTransaction() async {
-    DialogResponse res = await _dialogService.showConfirmationDialog(
-      title: 'Delete',
-      description: 'Are you sure you want to delete this transaction?',
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
-    );
-
-    return res.confirmed;
-  }
-
   void deleteTransaction(String id) async {
     ServerResponse res = await _transactionService.deleteTransaction(id);
     if (!res.success) {
@@ -85,10 +74,21 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future<bool> confirmDeleteTransaction() async {
+    DialogResponse res = await _dialogService.showConfirmationDialog(
+      title: 'Delete',
+      description: 'Are you sure you want to delete this transaction?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+    );
+
+    return res.confirmed;
+  }
+
   double getAmount() {
     return _transactionService
         .getAmountsList()
-        .reduce((acc, item) => (acc += item));
+        .fold(0.00, (acc, item) => (acc += item));
   }
 
   double getIncome() {
@@ -106,20 +106,30 @@ class HomeViewModel extends BaseViewModel {
         .abs();
   }
 
-  void navigateToAddTransaction() async {
-    var res =
-        await _navigationService.navigateTo(Routes.addTransactionViewRoute);
+  void navigateToAddTransaction(Transaction transaction) async {
+    var res = await _navigationService
+        .navigateTo(Routes.addTransactionViewRoute, arguments: transaction);
 
-    Transaction transaction = res['transaction'][0];
+    if (res == null) {
+      return;
+    }
+
+    transaction = res['transaction'][0];
 
     _snackbarService.showCustomSnackBar(
       backgroundColor: Colors.green,
       title: 'Success',
-      message: '${transaction.text} successfully added',
+      message:
+          '${transaction.text} successfully ${transaction == null ? 'added' : 'updated'}',
       duration: Duration(seconds: 3),
     );
 
-    _transactionService.transactionList.add(transaction);
+    if (transaction == null) {
+      _transactionService.transactionList.add(transaction);
+    } else {
+      int index = _transactionService.transactionList.indexOf(transaction);
+      _transactionService.transactionList[index] = transaction;
+    }
     notifyListeners();
   }
 }

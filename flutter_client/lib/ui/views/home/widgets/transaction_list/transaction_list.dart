@@ -51,6 +51,7 @@ class _TransactionTile extends ViewModelWidget<HomeViewModel> {
           return model.confirmDeleteTransaction();
         }
 
+        model.navigateToAddTransaction(transaction);
         return Future<bool>.value(false);
       },
       onDismissed: (DismissDirection direction) {
@@ -67,7 +68,15 @@ class _TransactionTile extends ViewModelWidget<HomeViewModel> {
           color: Colors.white,
         ),
       ),
-      secondaryBackground: Container(),
+      secondaryBackground: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        alignment: Alignment.centerRight,
+        color: Colors.blueAccent,
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
