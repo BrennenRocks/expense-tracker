@@ -20,7 +20,6 @@ class HomeViewModel extends BaseViewModel {
 
   void getAllTransactions() async {
     setBusy(true);
-    notifyListeners();
 
     ServerResponse res = await _transactionService.getAllTransactions();
     if (!res.success) {
@@ -32,7 +31,6 @@ class HomeViewModel extends BaseViewModel {
       );
 
       setBusy(false);
-      notifyListeners();
       return;
     }
 
@@ -48,15 +46,14 @@ class HomeViewModel extends BaseViewModel {
         .toList();
 
     setBusy(false);
-    notifyListeners();
   }
 
   Future<bool> confirmDeleteTransaction() async {
     DialogResponse res = await _dialogService.showConfirmationDialog(
       title: 'Delete',
       description: 'Are you sure you want to delete this transaction?',
-      confirmationTitle: 'Delete',
-      cancelTitle: 'Cancel',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
     );
 
     return res.confirmed;

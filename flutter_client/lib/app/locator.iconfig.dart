@@ -4,8 +4,8 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_client/core/services/third_party_services_module.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_client/core/services/transaction_service.dart';
 import 'package:get_it/get_it.dart';
 
