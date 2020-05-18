@@ -64,7 +64,7 @@ exports.addTransaction = async (req, res, next) => {
  */
 exports.updateTransaction = async (req, res, next) => {
   try {
-    const transaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, { new: true, useFindAndModify: false });
+    const transaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
     return res.status(200).json({
       success: true,

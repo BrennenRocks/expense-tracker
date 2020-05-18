@@ -114,21 +114,21 @@ class HomeViewModel extends BaseViewModel {
       return;
     }
 
-    transaction = res['transaction'][0];
+    Transaction newTransaction = res['transaction'][0];
 
     _snackbarService.showCustomSnackBar(
       backgroundColor: Colors.green,
       title: 'Success',
       message:
-          '${transaction.text} successfully ${transaction == null ? 'added' : 'updated'}',
+          '${newTransaction.text} successfully ${transaction == null ? 'added' : 'updated'}',
       duration: Duration(seconds: 3),
     );
 
     if (transaction == null) {
-      _transactionService.transactionList.add(transaction);
+      _transactionService.transactionList.add(newTransaction);
     } else {
-      int index = _transactionService.transactionList.indexOf(transaction);
-      _transactionService.transactionList[index] = transaction;
+      int index = _transactionService.transactionList.indexOf(newTransaction);
+      _transactionService.transactionList[index] = newTransaction;
     }
     notifyListeners();
   }

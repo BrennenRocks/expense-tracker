@@ -27,7 +27,7 @@ class AddTransactionView extends StatelessWidget {
             ),
           ],
         ),
-        body: _TextFields(transaction.text, transaction.amount),
+        body: _TextFields(transaction),
       ),
       viewModelBuilder: () => AddTransactionViewModel(),
     );
@@ -35,19 +35,23 @@ class AddTransactionView extends StatelessWidget {
 }
 
 class _TextFields extends HookViewModelWidget<AddTransactionViewModel> {
-  final String transactionText;
-  final double transactionAmount;
+  final Transaction transaction;
 
-  _TextFields(this.transactionText, this.transactionAmount);
+  _TextFields(this.transaction);
 
   @override
   Widget buildViewModelWidget(
       BuildContext context, AddTransactionViewModel model) {
-    var text = useTextEditingController(text: transactionText);
-    var amount = useTextEditingController(text: transactionAmount.toString());
+    var text = useTextEditingController();
+    var amount = useTextEditingController();
 
-    model.text = text.text;
-    model.amount = amount.text;
+    if (transaction != null) {
+      text = useTextEditingController(text: transaction.text);
+      amount = useTextEditingController(text: transaction.amount.toString());
+
+      model.text = text.text;
+      model.amount = amount.text;
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
