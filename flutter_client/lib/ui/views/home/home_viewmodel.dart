@@ -107,8 +107,9 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void navigateToAddTransaction(Transaction transaction) async {
-    var res = await _navigationService
-        .navigateTo(Routes.addTransactionViewRoute, arguments: transaction);
+    var res = await _navigationService.navigateTo(
+        Routes.addTransactionViewRoute,
+        arguments: AddTransactionViewArguments(transaction: transaction));
 
     if (res == null) {
       return;
