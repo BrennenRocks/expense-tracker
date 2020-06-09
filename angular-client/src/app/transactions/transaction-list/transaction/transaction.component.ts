@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Transaction } from 'src/app/core/models/transaction';
-import { TransactionsService } from '../../transactions.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { Transaction } from "src/app/core/models/transaction";
+import { TransactionsService } from "../../transactions.service";
 
 @Component({
   selector: 'bd-transaction',
@@ -9,7 +9,8 @@ import { TransactionsService } from '../../transactions.service';
 export class TransactionComponent implements OnInit {
 
   private _transaction: Transaction;
-  @Input() get transaction(): Transaction {
+  @Input()
+  get transaction(): Transaction {
     return this._transaction;
   }
 
@@ -33,4 +34,6 @@ export class TransactionComponent implements OnInit {
     this.transactionService.deleteTransaction(id);
   }
 
+  editTransaction(id: string): void {
+  }
 }

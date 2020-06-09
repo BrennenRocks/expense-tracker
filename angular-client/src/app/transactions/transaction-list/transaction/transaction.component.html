@@ -1,4 +1,5 @@
 <li [className]="color">
   {{ transaction.text }} <span>{{ sign }}{{ transaction.amount | abs | currency }}</span>
   <button (click)="deleteTransaction(transaction._id)" class="delete-btn">x</button>
+  <button (click)="editTransaction(transaction._id)" class="edit-btn">e</button>
 </li>

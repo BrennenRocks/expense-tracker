@@ -101,7 +101,8 @@ input[type='number'] {
 }
 
 .btn:focus,
-.delete-btn:focus {
+.delete-btn:focus,
+.edit-btn:focus {
   outline: 0;
 }
 
@@ -146,7 +147,23 @@ input[type='number'] {
   transition: opacity 0.3s ease;
 }
 
-.list li:hover .delete-btn {
+.edit-btn {
+  cursor: pointer;
+  background-color: aqua;
+  border: 0;
+  color: #fff;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 2px 5px;
+  position: absolute;
+  top: 50%;
+  right: -13.8%;
+  transform: translate(-100%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.list li:hover .delete-btn, .list li:hover .edit-btn {
   opacity: 1;
 }
 

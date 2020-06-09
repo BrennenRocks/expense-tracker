@@ -17,7 +17,7 @@ export class TransactionsService extends EntityCollectionServiceBase<Transaction
 
   constructor(private http: HttpClient, entityCollectionServiceElementsFactory: EntityCollectionServiceElementsFactory, private notificationService: NotificationService) {
     super('Transaction', entityCollectionServiceElementsFactory);
-   }
+  }
 
   getAllTransactions(): void {
     this.setLoading(true);
@@ -72,7 +72,7 @@ export class TransactionsService extends EntityCollectionServiceBase<Transaction
           return;
         }
 
-        this.notificationService.showSuccess(`${res.data[0].text} successfully added`);
+        this.notificationService.showSuccess(`${res.data[0].text} successfully deleted`);
       });
   }
 }
